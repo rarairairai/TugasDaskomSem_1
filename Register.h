@@ -11,7 +11,7 @@ FILE* file;
 
 void Registerol() {
 	RegisterUser Register_user[size];
-	file = fopen("Data.txt", "w");
+	file = fopen("Data.txt", "a");
 	if (file == NULL) {
 		printf("There is an error in reading the file");
 		
@@ -21,7 +21,7 @@ void Registerol() {
 	scanf("%s", Register_user[0].NameVerif);
 	printf("Password - ");
 	scanf("%s", Register_user[0].PassVerif);
-	printf("Password - ");
+	printf("Type - ");
 	scanf("%s", Register_user[0].type);
 
 	fprintf(file, Register_user[0].NameVerif);

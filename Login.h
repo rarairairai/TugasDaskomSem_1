@@ -1,17 +1,19 @@
 #include<stdio.h>
 #include<string.h>
-#include"admin.h"
+
 # define size  100
 
 typedef struct {
 char NameVerif[50];
 char PassVerif[50];
+char Type[50];
 }User ;
 
 User user[size];
 
 char Name[50];
 char Passp[50];
+char tempAdminUser[50];
 
 int option;
 int data_size = 3;
@@ -27,23 +29,26 @@ void fetching_data() {
     file = fopen("Data.txt", "r");
     fopen("Data.txt", "r");
     for (int i = 0; i < size; i++){
-        fscanf(file, "%s %s", user[i].NameVerif ,user[i].PassVerif);
-        printf("Username is %s \n", user[i].NameVerif);
+        fscanf(file, "%s %s %s", user[i].NameVerif ,user[i].PassVerif,user[i].Type);
+        
         
     }
     fclose(file);
 }
 
-void userAuthentication(char name[50], char pass[50], User user[size], int counter) {
-   
-    if (strcmp(name, "admin") == 0 && strcmp(pass, "admin") == 0) {
-        printf("Welcome admin");
-    }
-    else if(strcmp(name, user[1].NameVerif) == 0 && strcmp(pass, user[1].PassVerif) == 0)
-    {
-        printf("\n welcome %s", name);
-    }
+int userAuthentication(char name[50], char pass[50], User user[size], int counter) {
+    for (int i = 0; i < size; i++) {
+        if (strcmp(user[i].Type, "Admin") == 0 && strcmp(user[i].NameVerif, name) == 0 && strcmp(user[i].PassVerif,pass)==0) {
+            tempAdminUser == user[i].NameVerif;
 
+            printf("Welcome %s",tempAdminUser);
+        }
+        else if (strcmp(name, user[i].NameVerif) == 0 && strcmp(pass, user[i].PassVerif) == 0 && strcmp("Client",user[i].Type) == 0)
+        {
+            printf("\n welcome %s", name);
+        }
+   
+    }
 }void login() {
 
     fetching_data();
@@ -55,7 +60,10 @@ void userAuthentication(char name[50], char pass[50], User user[size], int count
     printf(" password");
     printf(" - "); scanf("%s", &Passp);
 
-    userAuthentication(Name, Passp, user, size);
+    if (userAuthentication(Name, Passp, user, size) == 0) {
+        login();
+   }
+    else if(userAuthentication(Name, Passp, user, size) == 0){}
 
 }
 
