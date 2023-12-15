@@ -25,13 +25,9 @@ FILE* file;
 
 
 void fetching_data() {
-    
-    file = fopen("Data.txt", "r");
-    fopen("Data.txt", "r");
-    for (int i = 0; i < size; i++){
-        fscanf(file, "%s %s %s", user[i].NameVerif ,user[i].PassVerif,user[i].Type);
-        
-        
+    file = fopen("Data.bat", "rb+");
+    while (fread(&user, sizeof(user), 1, file) == 1 ) {
+        printf("%s\n", user.NameVerif);
     }
     fclose(file);
 }
