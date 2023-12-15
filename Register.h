@@ -1,35 +1,35 @@
 #include<stdio.h>
 
-# define size  100
+
 typedef struct {
-	char NameVerif[50];
-	char PassVerif[50];
+	char name[50];
+	char passp[50];
 	char type[50];
-}RegisterUser;
+	int balance;
+	int frequency;
+}Regist;
 
 FILE* file;
 
 void Registerol() {
-	RegisterUser Register_user[size];
-	file = fopen("Data.txt", "a");
+	Regist register_user;
+	register_user.balance = 0;
+	register_user.frequency = 0;
+	file = fopen("Data.bin", "ab");
 	if (file == NULL) {
 		printf("There is an error in reading the file");
 		
 	}
 	printf("====Register====\n\n");
 	printf("Username - ");
-	scanf("%s", Register_user[0].NameVerif);
+	scanf("%s", &register_user.name);
 	printf("Password - ");
-	scanf("%s", Register_user[0].PassVerif);
+	scanf("%s", &register_user.passp);
 	printf("Type - ");
-	scanf("%s", Register_user[0].type);
+	scanf("%s", &register_user.type);
 
-	fprintf(file, Register_user[0].NameVerif);
-	fprintf(file, " ");
-	fprintf(file, Register_user[0].PassVerif);
-	fprintf(file, " ");
-	fprintf(file, Register_user[0].type);
-	fprintf(file, "\n");
+	fwrite(&register_user,sizeof(Regist),1,file);
+	
 
 	fclose(file);
 	

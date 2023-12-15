@@ -1,92 +1,83 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
+#include"Register.h"
+#include"admin.h"
 
-# define size  100
+int option = 0;
+typedef struct 
+{
+    char name[50];
+    char passp[50];
+    char type[50];
+    int balance;
+    int frequency;
+}User;
 
-typedef struct {
-char NameVerif[50];
-char PassVerif[50];
-char Type[50];
-}User ;
+int loginvalue;
+int couter = 0;
+char userType[50];
 
-User user[size];
+int Authentication(User user2,char username[50], char password[50]) {
 
-char Name[50];
-char Passp[50];
-char tempAdminUser[50];
+    FILE* file1;
+    file1 = fopen("Data.bin", "rb");
 
-int option;
-int data_size = 3;
-FILE* file;
-
-
-
-
-
-
-void fetching_data() {
-    file = fopen("Data.bat", "rb+");
-    while (fread(&user, sizeof(user), 1, file) == 1 ) {
-        printf("%s\n", user.NameVerif);
+    
+    while (fread(&user2, sizeof(user2), 1, file1)) {
+        if (strcmp(user2.name, username) == 0 && strcmp(user2.passp,password)) {
+            strcpy(userType,user2.);
+            return 1;
+            break;
+        }
     }
-    fclose(file);
+    fclose(file1);
+    return 0;
 }
 
-int userAuthentication(char name[50], char pass[50], User user[size], int counter) {
-    for (int i = 0; i < size; i++) {
-        if (strcmp(user[i].Type, "Admin") == 0 && strcmp(user[i].NameVerif, name) == 0 && strcmp(user[i].PassVerif,pass)==0) {
-            tempAdminUser == user[i].NameVerif;
 
-            printf("Welcome %s",tempAdminUser);
-        }
-        else if (strcmp(name, user[i].NameVerif) == 0 && strcmp(pass, user[i].PassVerif) == 0 && strcmp("Client",user[i].Type) == 0)
-        {
-            printf("\n welcome %s", name);
-        }
-   
-    }
-}void login() {
+int login() {
+    User user,user1;
+ 
+    printf("Enter your Username - ");
+    scanf("%s", &user.name);
+    printf("Enter your password - ");
+    scanf("%s", &user.name);
+    if (Authentication(user1, user.name, user.passp) == 1) {
+        
+        loginvalue = 1;
 
-    fetching_data();
-
-    printf("The data from data.txt : %s\n", user[0].NameVerif);
-    printf("   ====Login=====   ");
-    printf("\n username");
-    printf(" - "); scanf("%s", &Name);
-    printf(" password");
-    printf(" - "); scanf("%s", &Passp);
-
-    if (userAuthentication(Name, Passp, user, size) == 0) {
-        login();
    }
-    else if(userAuthentication(Name, Passp, user, size) == 0){}
+    else {
 
+        loginvalue = 1;
+    }
 }
 
-void start() {
+int start() {
+
     printf("====Register/Login====\n\n");
     printf("1. Register\n");
     printf("2. Login\n");
     printf("3. quit\n\n- ");
     scanf("%d", &option);
-
-    switch (option)
-    {
-    case 1: 
-        Registerol();
-        break;
-    case 2: 
-        login();
-        break;
-    default:
-        printf("Pls 1 or 2\n");
-        if (option == 3) {
+    while (option != 3) {
+        if (option == 1) {
+            Registerol();
+            break;
+        }
+        else if (option == 2) {
+            login();
+            if (loginvalue == 1) {
+                printf("Login Sucessful");
+            }
             break;
         }
         else {
-            start();
+            option = 3;
         }
 
+        // login sucess for admin
     }
-
+  
 }
